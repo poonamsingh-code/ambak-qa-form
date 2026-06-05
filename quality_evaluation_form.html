@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quality Evaluation Form — Ambak</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F5F7;
+    --surface: #FFFFFF;
+    --surface2: #F8F9FB;
+    --border: #E2E5EA;
+    --border2: #CDD2DA;
+    --text: #111827;
+    --text2: #4B5563;
+    --text3: #9CA3AF;
+    --accent: #1D4ED8;
+    --accent-light: #EEF2FF;
+    --accent2: #0EA5E9;
+    --green: #059669;
+    --green-light: #ECFDF5;
+    --amber: #D97706;
+    --amber-light: #FFFBEB;
+    --red: #DC2626;
+    --red-light: #FEF2F2;
+    --fresh: #6366F1;
+    --fresh-light: #EEF2FF;
+    --followup: #0891B2;
+    --followup-light: #ECFEFF;
+    --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text);
+  }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 16px;
+  }
+  .header-right {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: var(--text3);
+    margin-bottom: 24px;
+  }
+
+  /* ── Call Type Toggle ── */
+  .type-toggle {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 4px;
+    margin-bottom: 20px;
+    width: fit-content;
+    gap: 4px;
+  }
+  .type-btn {
+    padding: 8px 22px;
+    border: none;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    color: var(--text2);
+    background: transparent;
+  }
+  .type-btn.active-fresh {
+    background: var(--fresh);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(99,102,241,.3);
+  }
+  .type-btn.active-followup {
+    background: var(--followup);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(8,145,178,.3);
+  }
+  .type-btn:not(.active-fresh):not(.active-followup):hover {
+    background: var(--bg);
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .card-head-left {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .card-head h3 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text2);
+  }
+  .section-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text3);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+  .section-score span { color: var(--accent); font-weight: 500; }
+
+  /* ── Meta grid ── */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 18px;
+  }
+  .meta-grid.two { grid-template-columns: repeat(2, 1fr); }
+  .meta-grid.four { grid-template-columns: repeat(4, 1fr); }
+
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: 5px;
+  }
+  .field select,
+  .field input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color .15s;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+  }
+  .field input[type=date], .field input[type=text] {
+    background-image: none;
+    padding-right: 10px;
+  }
+  .field select:focus, .field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(29,78,216,.08);
+  }
+
+  /* ── Param table ── */
+  .param-table { width: 100%; }
+  .param-row {
+    display: grid;
+    grid-template-columns: 24px 1fr 70px 130px 64px 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--border);
+    transition: background .1s;
+  }
+  .param-row:last-child { border-bottom: none; }
+  .param-row:hover { background: var(--surface2); }
+  .param-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    text-align: center;
+  }
+  .param-name {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .param-wt {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    text-align: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+  .rating-sel {
+    width: 100%;
+    padding: 6px 26px 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    transition: border-color .15s;
+  }
+  .rating-sel:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,.08); }
+  .rating-sel.r-complete { border-color: var(--green); background-color: var(--green-light); color: var(--green); }
+  .rating-sel.r-semi { border-color: var(--amber); background-color: var(--amber-light); color: var(--amber); }
+  .rating-sel.r-partial { border-color: #F59E0B; background-color: #FFFBEB; color: #B45309; }
+  .rating-sel.r-no { border-color: var(--red); background-color: var(--red-light); color: var(--red); }
+  .rating-sel.r-na { border-color: var(--border2); background-color: var(--bg); color: var(--text3); }
+
+  .score-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text3);
+    border: 1px solid var(--border);
+    transition: all .2s;
+  }
+  .score-chip.scored { background: var(--green-light); color: var(--green); border-color: #6EE7B7; }
+  .score-chip.zero { background: var(--red-light); color: var(--red); border-color: #FCA5A5; }
+
+  .comment-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color .15s;
+  }
+  .comment-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(29,78,216,.08); }
+  .comment-input::placeholder { color: var(--text3); }
+
+  /* Table header */
+  .param-header {
+    display: grid;
+    grid-template-columns: 24px 1fr 70px 130px 64px 1fr;
+    gap: 10px;
+    padding: 8px 18px;
+    border-bottom: 1px solid var(--border);
+    background: #FAFBFC;
+  }
+  .param-header span {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text3);
+  }
+  .param-header span.center { text-align: center; }
+
+  /* ── Score summary ── */
+  .score-summary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-md);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .score-big {
+    font-size: 42px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+    color: var(--text);
+    line-height: 1;
+  }
+  .score-big span { font-size: 20px; color: var(--text3); font-weight: 400; }
+  .score-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+  .score-pct {
+    font-size: 28px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    text-align: right;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--bg);
+    border-radius: 3px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width .4s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+
+  /* ── Submit ── */
+  .submit-area { margin-top: 8px; }
+  .btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-submit:hover { background: #1e40af; box-shadow: 0 4px 14px rgba(29,78,216,.3); transform: translateY(-1px); }
+  .btn-submit:active { transform: none; }
+  .status-msg {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text3);
+    margin-top: 10px;
+    min-height: 20px;
+  }
+  .status-msg.ok { color: var(--green); }
+  .status-msg.err { color: var(--red); }
+
+  /* ── Fatal section ── */
+  .fatal-row { background: #FFF5F5; }
+  .fatal-row .param-name { color: var(--red); font-weight: 500; }
+  .fatal-row .section-dot { background: var(--red); }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .meta-grid, .meta-grid.four { grid-template-columns: 1fr 1fr; }
+    .meta-grid.two { grid-template-columns: 1fr; }
+    .param-row, .param-header { grid-template-columns: 1fr 60px 110px 52px; }
+    .param-num, .comment-input, .param-header span:first-child, .param-header span:last-child { display: none; }
+    .header { padding: 0 16px; }
+    .container { padding: 16px 14px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    Ambak Quality
+  </div>
+  <div class="header-right">
+    <span class="badge">QA FORM v2</span>
+  </div>
+</header>
+
+<div class="container">
+  <div class="page-title">Quality Evaluation Form</div>
+  <p class="page-sub">Evaluate agent call quality · Scores auto-calculate from weightage</p>
+
+  <!-- Call Type -->
+  <div class="type-toggle">
+    <button class="type-btn active-fresh" id="btn-fresh" onclick="setType('fresh',this)">⬤ Fresh Call</button>
+    <button class="type-btn" id="btn-followup" onclick="setType('followup',this)">⬤ Follow-up Call</button>
+  </div>
+
+  <!-- Meta Info -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-head">
+      <div class="card-head-left"><div class="section-dot" style="background:#6366F1"></div><h3>Call Details</h3></div>
+    </div>
+    <div class="meta-grid four" style="padding:16px 18px">
+      <div class="field">
+        <label>QA Name (Team Lead)</label>
+        <select id="qa-sel" onchange="onQAChange()">
+          <option value="">— select QA —</option>
+          <option>Sunny Bari</option>
+          <option>Khyati Choudhary</option>
+          <option>Puneet Ranjan</option>
+          <option>Ankit Kumar</option>
+          <option>Ajay Kumar</option>
+          <option>Sanchit Sisodiya</option>
+          <option>Sughar Singh Rajpoot</option>
+          <option>Ravi Kumar</option>
+          <option>Ashad Akram Pirzade</option>
+          <option>Anita Baban Shinde</option>
+          <option>Jaykumar M Shah</option>
+          <option>Kamlesh Kumar Yadav</option>
+          <option>Anshul Kumar</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Agent Name</label>
+        <select id="agent-sel">
+          <option value="">— select QA first —</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Lead ID</label>
+        <input type="text" id="lead-id" placeholder="e.g. 190140">
+      </div>
+      <div class="field">
+        <label>Call Date & Time</label>
+        <input type="date" id="call-date">
+      </div>
+      <div class="field">
+        <label>Audit Date</label>
+        <input type="date" id="audit-date">
+      </div>
+      <div class="field">
+        <label>Call Duration</label>
+        <input type="text" id="call-duration" placeholder="e.g. 5:32 or 332 sec">
+      </div>
+    </div>
+  </div>
+
+  <!-- Param Sections -->
+  <div id="sections-wrap"></div>
+
+  <!-- Score Summary -->
+  <div class="score-summary">
+    <div>
+      <div class="score-big" id="total-score">0<span> / <span id="max-score">0</span></span></div>
+      <div class="score-label">Total Score</div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+    <div>
+      <div class="score-pct" id="pct-score">0%</div>
+      <div class="score-label" style="text-align:right">Score %</div>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-area">
+    <button class="btn-submit" onclick="submitForm()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+      Submit to Google Sheet
+    </button>
+    <div class="status-msg" id="status-msg"></div>
+  </div>
+</div>
+
+<script>
+// ── Agent mapping (exact from sheet) ──
+const AGENTS = {
+  "Anshul Kumar": ["Ravi Kumar","Megha Jain","Alok .","Yash Verma","Shikha .","Pawan Kumar","Priya Bisht","Shalni Kumari"],
+  "Ashad Akram Pirzade": ["Dakshata Barku Raundhal","Kishor Bhandarkar","Mohammad Nashir Aslam Shaikh","Akshata Dattaram Chavan","Mahesh Shinge","Rameshwar Santosh Jadhav","VAISHALI LAXMAN JETHVA","Madhuri Sudhir Tambe","Sonali Dinesh Jawale","Kajal Prajapati","Dinar Dildar Hussain Khan","Rakesh Satyanarayana Mamidala","Ajay Damu Pawar","Janhavi Vilas Adivarekar","Anil Narsayya Keti","Amitkumar Rajendarkumar Peepal","Anita Baban Shinde"],
+  "Sanchit Sisodiya": ["Ravi Kumar Chaudhary","Sughar Singh Rajpoot","Ritika Kumari","Ridhi .","Akhilesh Singh","Gaurav Sain","Kuldeep .","Ravindra Kumar Sah","Shivam .","Komal Garg","Md Faiyaz","Sonu Dayma","Lokesh Yadav","Uttam Tiwari","Harendra Sharma","Sameer Singh","Mamta Kumari","Bhavana Prajapati","Jatin Kumar","Shivam Yadav","Rashid Ali"],
+  "Kamlesh Kumar Yadav": ["Bapurao Ramrao Gholap","Amit Krishnakumar Prajapati","Shubham Dilip Rathor","Riddhi Popat Shrisunder"],
+  "Jaykumar M Shah": ["Sanneboina Mahesh","Loganathan G","Shravya Manjunath","Abdul Kalam"]
+};
+
+// ── Parameters from HTMl sheet (same for Fresh & Followup — rating determines relevance) ──
+const SECTIONS = [
+  { id:"call-opening", name:"Call Opening", color:"#6366F1", params:[
+    { n:"Greet & Welcome", w:1 },
+    { n:"Self & Ambak Intro", w:1 },
+    { n:"RPC Confirm", w:2 },
+    { n:"Lead source - DDA/Mhada/Housing.com etc", w:1 }
+  ]},
+  { id:"about-ambak", name:"About Ambak", color:"#8B5CF6", params:[
+    { n:"Ambak Advantage", w:5 }
+  ]},
+  { id:"loan", name:"Loan", color:"#0EA5E9", params:[
+    { n:"Confirm loan type", w:2 },
+    { n:"Confirm loan amount", w:3 }
+  ]},
+  { id:"customer-details", name:"Customer Details", color:"#10B981", params:[
+    { n:"Customer Name, age, Address, Email etc.", w:5 }
+  ]},
+  { id:"property", name:"Property Details", color:"#F59E0B", params:[
+    { n:"Confirm location", w:2 },
+    { n:"Property identify", w:10 }
+  ]},
+  { id:"income", name:"Income", color:"#EF4444", params:[
+    { n:"Customer income details", w:10 },
+    { n:"Confirm customer CIBIL", w:6 }
+  ]},
+  { id:"lead-status", name:"Lead Status", color:"#06B6D4", params:[
+    { n:"Lead Qualified", w:5 }
+  ]},
+  { id:"comm-skills", name:"Communication Skills", color:"#84CC16", params:[
+    { n:"Tone / Fumbling / Attentiveness / Repetition", w:5 },
+    { n:"Interruption / Rate of Speech / Rude", w:5 },
+    { n:"Empathy / Appreciation / Acknowledgement", w:5 },
+    { n:"Potential Mirroring Language", w:5 },
+    { n:"Hold / Mute / Dead Air", w:2 }
+  ]},
+  { id:"objection", name:"Objection Handling", color:"#F97316", params:[
+    { n:"Process, Product and Behavioural", w:10 }
+  ]},
+  { id:"urgency", name:"Urgency", color:"#EC4899", params:[
+    { n:"Create Urgency for Docs & Info", w:7 }
+  ]},
+  { id:"tat", name:"TAT", color:"#14B8A6", params:[
+    { n:"All TAT expected explained", w:5 }
+  ]},
+  { id:"sangam", name:"Sangam", color:"#6366F1", params:[
+    { n:"Closing remarks updated in Sangam", w:1 },
+    { n:"Offer shared on WhatsApp / Mail (as required)", w:7 },
+    { n:"Follow up set in Sangam & on time follow up", w:5 },
+    { n:"Document list shared with customer", w:5 },
+    { n:"Document upload in Sangam", w:10 }
+  ]},
+  { id:"closing", name:"Closing", color:"#0EA5E9", params:[
+    { n:"Callback Timing", w:2 },
+    { n:"Call Closure + Power Closure", w:3 }
+  ]},
+  { id:"fatal", name:"Fatal", color:"#DC2626", params:[
+    { n:"Zero Tolerance Policy", w:0 }
+  ]}
+];
+
+const RATING_VALS = { Complete:100, Semi:50, Partial:33, No:0, NA:0 };
+let callType = "fresh";
+let ratings = {};  // key: sectionId+"|"+paramName → rating string
+let comments = {}; // same key → comment
+
+function setType(t, btn) {
+  callType = t;
+  document.getElementById('btn-fresh').className = 'type-btn' + (t==='fresh'?' active-fresh':'');
+  document.getElementById('btn-followup').className = 'type-btn' + (t==='followup'?' active-followup':'');
+  // Keep existing ratings
+  renderSections();
+}
+
+function onQAChange() {
+  const qa = document.getElementById('qa-sel').value;
+  const sel = document.getElementById('agent-sel');
+  const list = AGENTS[qa];
+  if (!list) {
+    sel.innerHTML = '<option value="">— no agents mapped —</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">— select agent —</option>' + list.map(a=>`<option value="${a}">${a}</option>`).join('');
+}
+
+function safeId(s) { return s.replace(/[^a-zA-Z0-9]/g,'_'); }
+
+function renderSections() {
+  const wrap = document.getElementById('sections-wrap');
+  let html = '';
+  SECTIONS.forEach(sec => {
+    const secKey = sec.id;
+    const isFatal = sec.id === 'fatal';
+    // Section score calc
+    let secTotal = 0, secMax = 0;
+    sec.params.forEach(p => {
+      const k = secKey + '|' + p.n;
+      if (ratings[k]) secTotal += p.w * (RATING_VALS[ratings[k]] || 0) / 100;
+      if (p.w > 0) secMax += p.w;
+    });
+
+    html += `<div class="card${isFatal?' fatal-card':''}">
+      <div class="card-head">
+        <div class="card-head-left">
+          <div class="section-dot" style="background:${sec.color}"></div>
+          <h3>${sec.name}</h3>
+        </div>
+        <div class="section-score" id="sec-score-${sec.id}">
+          <span>${secTotal.toFixed(1)}</span> / ${secMax} pts
+        </div>
+      </div>
+      <div class="param-header">
+        <span>#</span><span>Parameter</span><span class="center">Weight</span>
+        <span class="center">Rating</span><span class="center">Score</span><span>Comment</span>
+      </div>
+      <div class="param-table">`;
+
+    sec.params.forEach((p, i) => {
+      const k = secKey + '|' + p.n;
+      const r = ratings[k] || '';
+      const c = comments[k] || '';
+      const sc = r ? (p.w * (RATING_VALS[r] || 0) / 100) : null;
+      const chipCls = sc === null ? '' : (sc > 0 ? ' scored' : ' zero');
+      const selCls = r ? ' r-' + r.toLowerCase() : '';
+      html += `<div class="param-row${isFatal?' fatal-row':''}">
+        <div class="param-num">${i+1}</div>
+        <div class="param-name">${p.n}</div>
+        <div class="param-wt">${p.w} pt${p.w!==1?'s':''}</div>
+        <select class="rating-sel${selCls}" data-k="${safeId(k)}" data-raw="${k}" data-w="${p.w}" onchange="onRate(this)">
+          <option value="">— rate —</option>
+          <option${r==='Complete'?' selected':''}>Complete</option>
+          <option${r==='Semi'?' selected':''}>Semi</option>
+          <option${r==='Partial'?' selected':''}>Partial</option>
+          <option${r==='No'?' selected':''}>No</option>
+          <option${r==='NA'?' selected':''}>NA</option>
+        </select>
+        <div class="score-chip${chipCls}" id="chip-${safeId(k)}">${sc!==null ? sc.toFixed(1) : '—'}</div>
+        <input class="comment-input" type="text" placeholder="Add comment…" value="${c}" data-raw="${k}" onchange="onComment(this)" oninput="onComment(this)">
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+  wrap.innerHTML = html;
+  updateTotal();
+}
+
+function onRate(sel) {
+  const k = sel.dataset.raw;
+  const w = parseFloat(sel.dataset.w);
+  const v = sel.value;
+  ratings[k] = v;
+  // update chip
+  const sc = v ? w * (RATING_VALS[v] || 0) / 100 : null;
+  const chip = document.getElementById('chip-' + safeId(k));
+  if (chip) {
+    chip.textContent = sc !== null ? sc.toFixed(1) : '—';
+    chip.className = 'score-chip' + (sc === null ? '' : sc > 0 ? ' scored' : ' zero');
+  }
+  // update select color
+  sel.className = 'rating-sel' + (v ? ' r-' + v.toLowerCase() : '');
+  // update section score
+  const secId = k.split('|')[0];
+  updateSectionScore(secId);
+  updateTotal();
+}
+
+function onComment(inp) {
+  comments[inp.dataset.raw] = inp.value;
+}
+
+function updateSectionScore(secId) {
+  const sec = SECTIONS.find(s => s.id === secId);
+  if (!sec) return;
+  let tot = 0, max = 0;
+  sec.params.forEach(p => {
+    const k = sec.id + '|' + p.n;
+    if (ratings[k]) tot += p.w * (RATING_VALS[ratings[k]] || 0) / 100;
+    if (p.w > 0) max += p.w;
+  });
+  const el = document.getElementById('sec-score-' + sec.id);
+  if (el) el.innerHTML = `<span>${tot.toFixed(1)}</span> / ${max} pts`;
+}
+
+function updateTotal() {
+  let tot = 0, max = 0;
+  SECTIONS.forEach(sec => {
+    sec.params.forEach(p => {
+      if (p.w > 0) max += p.w;
+      const k = sec.id + '|' + p.n;
+      if (ratings[k]) tot += p.w * (RATING_VALS[ratings[k]] || 0) / 100;
+    });
+  });
+  document.getElementById('total-score').innerHTML = `${tot.toFixed(1)}<span> / <span id="max-score">${max}</span></span>`;
+  const pct = max ? Math.round(tot / max * 100) : 0;
+  document.getElementById('pct-score').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+function submitForm() {
+  const qa = document.getElementById('qa-sel').value;
+  const agent = document.getElementById('agent-sel').value;
+  const leadId = document.getElementById('lead-id').value;
+  const callDate = document.getElementById('call-date').value;
+  const auditDate = document.getElementById('audit-date').value;
+  const callDuration = document.getElementById('call-duration').value;
+  const msg = document.getElementById('status-msg');
+
+  if (!qa || !agent || !callDate) {
+    msg.className = 'status-msg err';
+    msg.textContent = '⚠ Please fill QA name, agent name, and call date before submitting.';
+    return;
+  }
+
+  let rows = [], tot = 0, max = 0;
+  SECTIONS.forEach(sec => {
+    sec.params.forEach(p => {
+      const k = sec.id + '|' + p.n;
+      const r = ratings[k] || '';
+      const c = comments[k] || '';
+      const sc = r ? p.w * (RATING_VALS[r] || 0) / 100 : 0;
+      if (p.w > 0) { tot += sc; max += p.w; }
+      rows.push({ callDate, auditDate, callDuration, callType, leadId, qa, agent, section: sec.name, parameter: p.n, weightage: p.w, rating: r, score: sc.toFixed(2), comment: c });
+    });
+  });
+  const pct = max ? (tot / max * 100).toFixed(1) : 0;
+
+  // ← Replace with your deployed Apps Script URL
+  const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec";
+
+  msg.className = 'status-msg';
+  msg.textContent = 'Submitting…';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ rows, totalScore: tot.toFixed(2), maxScore: max, percentage: pct })
+  }).then(() => {
+    msg.className = 'status-msg ok';
+    msg.textContent = '✓ Submitted successfully! Check your Google Sheet.';
+  }).catch(() => {
+    msg.className = 'status-msg err';
+    msg.textContent = '✗ Could not reach Google Apps Script. Please deploy it first.';
+  });
+}
+
+// Init
+document.getElementById('call-date').value = new Date().toISOString().split('T')[0];
+document.getElementById('audit-date').value = new Date().toISOString().split('T')[0];
+renderSections();
+</script>
+</body>
+</html>
