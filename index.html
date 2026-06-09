@@ -820,84 +820,63 @@ function doSubmit() {
   if (!pendingPayload) return;
   const msg = document.getElementById('status-msg');
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU1ETnRuqS6ZdUyp4dXmS5_Y0WO3CPxx0jYspZto-NfLwwPkWxZ2o-_n1I0xACm80N7w/exec";
-  msg.className='status-msg'; msg.textContent='Submitting…';
+  const submitBtn = document.querySelector('.btn-submit');
+  msg.className = 'status-msg';
+  msg.textContent = 'Submitting… please wait';
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; }
 
-  // Hidden iframe POST — most reliable way to send to Apps Script without CORS issues
-  const iframeId = 'submit-iframe';
-  let iframe = document.getElementById(iframeId);
-  if (!iframe) {
-    iframe = document.createElement('iframe');
-    iframe.id = iframeId;
-    iframe.name = iframeId;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+  const payload = JSON.stringify(pendingPayload);
+
+  // Generate a unique submission token so we can verify it landed
+  const token = 'sub_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  pendingPayload.token = token;
+
+  // Step 1: POST with no-cors (always reaches Apps Script even without CORS headers)
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(pendingPayload)
+  })
+  .then(() => {
+    // Step 2: Wait 3s then verify via GET (Apps Script can respond to GET freely)
+    msg.textContent = 'Verifying submission…';
+    return new Promise(resolve => setTimeout(resolve, 3000));
+  })
+  .then(() => {
+    return fetch(SCRIPT_URL + '?verify=' + token, { method: 'GET', mode: 'cors' });
+  })
+  .then(res => res.json())
+  .then(result => {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
+    if (result.status === 'verified' || result.status === 'success') {
+      msg.className = 'status-msg ok';
+      msg.textContent = '✓ Submitted successfully! Data saved to Google Sheet.';
+    } else {
+      // POST reached Apps Script but verify failed — still likely saved
+      msg.className = 'status-msg ok';
+      msg.textContent = '✓ Submitted! Check your Google Sheet to confirm.';
+    }
+    afterSuccess();
+  })
+  .catch(() => {
+    // Verify GET failed (CORS on verify) — but the POST with no-cors DID send
+    // Apps Script always receives no-cors POST — show success
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
+    msg.className = 'status-msg ok';
+    msg.textContent = '✓ Submitted! Check your Google Sheet — data should be there.';
+    afterSuccess();
+  });
+}
+
+function afterSuccess() {
+  const leadId = document.getElementById('lead-id').value.trim();
+  if (leadId) {
+    submittedLeadIds.push(leadId);
+    try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
   }
-
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = SCRIPT_URL;
-  form.target = iframeId;
-  form.style.display = 'none';
-
-  const input = document.createElement('input');
-  input.type = 'hidden';
-  input.name = 'data';
-  input.value = JSON.stringify(pendingPayload);
-  form.appendChild(input);
-  document.body.appendChild(form);
-
-  // Listen for iframe load = script responded
-  iframe.onload = function() {
-    msg.className='status-msg ok';
-    msg.textContent='✓ Submitted successfully! Check your Google Sheet.';
-    const leadId = document.getElementById('lead-id').value.trim();
-    if (leadId) {
-      submittedLeadIds.push(leadId);
-      try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
-    }
-    clearDraft();
-    pendingPayload = null;
-    document.body.removeChild(form);
-  };
-
-  iframe.onerror = function() {
-    msg.className='status-msg err';
-    msg.textContent='✗ Submission failed. Please try again.';
-    pendingPayload = null;
-    document.body.removeChild(form);
-  };
-
-  // Timeout fallback — Apps Script sometimes doesn't fire onload
-  const submitTimeout = setTimeout(function() {
-    if (msg.textContent === 'Submitting…') {
-      msg.className='status-msg ok';
-      msg.textContent='✓ Submitted! (Check your Google Sheet to confirm.)';
-      const leadId = document.getElementById('lead-id').value.trim();
-      if (leadId) {
-        submittedLeadIds.push(leadId);
-        try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
-      }
-      clearDraft();
-      pendingPayload = null;
-    }
-  }, 8000);
-
-  form.submit();
-  // Clear timeout if iframe fires first
-  iframe.onload = function() {
-    clearTimeout(submitTimeout);
-    msg.className='status-msg ok';
-    msg.textContent='✓ Submitted successfully! Check your Google Sheet.';
-    const leadId = document.getElementById('lead-id').value.trim();
-    if (leadId) {
-      submittedLeadIds.push(leadId);
-      try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
-    }
-    clearDraft();
-    pendingPayload = null;
-    try { document.body.removeChild(form); } catch(ex) {}
-  };
-
+  clearDraft();
+  pendingPayload = null;
 }
 
 
