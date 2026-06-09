@@ -90,6 +90,29 @@
 </style>
 </head>
 <body>
+<div id="confirm-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;padding:28px;max-width:460px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <div style="font-size:18px;font-weight:600;color:#111827;margin-bottom:4px">Confirm Submission</div>
+    <div style="font-size:13px;color:#9CA3AF;margin-bottom:20px">Please review before submitting to Google Sheet</div>
+    <div style="background:#F8F9FB;border:1px solid #E2E5EA;border-radius:10px;padding:16px;margin-bottom:20px">
+      <div style="text-align:center;padding:12px 0;border-bottom:1px solid #E2E5EA;margin-bottom:8px">
+        <div id="cm-score" style="font-size:34px;font-weight:600;font-family:'DM Mono',monospace;color:#1D4ED8"></div>
+        <div id="cm-pct" style="font-size:13px;color:#9CA3AF;margin-top:2px"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E2E5EA;font-size:13px"><span style="color:#4B5563">QA Name</span><span id="cm-qa" style="font-weight:500;font-family:'DM Mono',monospace;font-size:12px"></span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E2E5EA;font-size:13px"><span style="color:#4B5563">Agent Name</span><span id="cm-agent" style="font-weight:500;font-family:'DM Mono',monospace;font-size:12px"></span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E2E5EA;font-size:13px"><span style="color:#4B5563">Lead ID</span><span id="cm-lead" style="font-weight:500;font-family:'DM Mono',monospace;font-size:12px"></span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E2E5EA;font-size:13px"><span style="color:#4B5563">Call Date</span><span id="cm-date" style="font-weight:500;font-family:'DM Mono',monospace;font-size:12px"></span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E2E5EA;font-size:13px"><span style="color:#4B5563">Call Type</span><span id="cm-type" style="font-weight:500;font-family:'DM Mono',monospace;font-size:12px"></span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px"><span style="color:#4B5563">Params Rated</span><span id="cm-rated" style="font-weight:500;font-family:'DM Mono',monospace;font-size:12px"></span></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="document.getElementById('confirm-overlay').style.display='none'" style="padding:11px 18px;background:#fff;color:#4B5563;border:1px solid #E2E5EA;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer">← Go Back</button>
+      <button id="cm-confirm-btn" style="flex:1;padding:11px;background:#1D4ED8;color:#fff;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer">Submit Now</button>
+    </div>
+  </div>
+</div>
+
 <header class="header">
   <div class="logo"><div class="logo-icon">✦</div>Ambak Quality</div>
   <span class="badge">QA FORM v4</span>
@@ -180,7 +203,7 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
       New Form
     </button>
-    <button class="btn-submit" id="submit-btn" onclick="submitForm()" style="flex:1">
+    <button class="btn-submit" id="submit-btn" onclick="showConfirm()" style="flex:1">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
       Submit to Google Sheet
     </button>
@@ -404,6 +427,45 @@ function submitForm(){
     msg.className='status-msg err';
     msg.textContent='✗ Network error. Please try again.';
   });
+}
+
+function showConfirm(){
+  const qa=document.getElementById('qa-sel').value;
+  const agent=document.getElementById('agent-sel').value;
+  const callDate=document.getElementById('call-date').value;
+  const msg=document.getElementById('status-msg');
+  if(!qa||!agent||!callDate){
+    msg.className='status-msg err';
+    msg.textContent='⚠ Please fill QA name, agent name, and call date before submitting.';
+    return;
+  }
+  const lid=document.getElementById('lead-id').value.trim();
+  if(lid && submittedLeadIds.includes(lid)){
+    if(!confirm('⚠ Lead ID "'+lid+'" was already submitted before. Submit again?')) return;
+  }
+  let tot=0,max=0,rated=0,total=0;
+  getSections().forEach(sec=>sec.params.forEach(p=>{
+    total++;
+    const k=sec.id+'|'+p.n;
+    if(ratings[k]){rated++;tot+=p.w*(RATING_VALS[ratings[k]]||0)/100;}
+    if(p.w>0)max+=p.w;
+  }));
+  const pct=max?(tot/max*100).toFixed(1):0;
+  document.getElementById('cm-score').textContent=tot.toFixed(1)+' / '+max;
+  document.getElementById('cm-pct').textContent=pct+'% score';
+  document.getElementById('cm-qa').textContent=qa;
+  document.getElementById('cm-agent').textContent=agent;
+  document.getElementById('cm-lead').textContent=lid||'—';
+  document.getElementById('cm-date').textContent=callDate;
+  document.getElementById('cm-type').textContent=callType==='fresh'?'Fresh Call':'Follow-up Call';
+  document.getElementById('cm-rated').textContent=rated+' / '+total;
+  const overlay=document.getElementById('confirm-overlay');
+  overlay.style.display='flex';
+  overlay.onclick=function(e){if(e.target===overlay)overlay.style.display='none';};
+  document.getElementById('cm-confirm-btn').onclick=function(){
+    overlay.style.display='none';
+    submitForm();
+  };
 }
 
 function resetForm(){
