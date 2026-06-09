@@ -90,6 +90,8 @@
 </style>
 </head>
 <body>
+
+<!-- Confirmation Modal -->
 <div id="confirm-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:28px;max-width:460px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2)">
     <div style="font-size:18px;font-weight:600;color:#111827;margin-bottom:4px">Confirm Submission</div>
@@ -222,13 +224,7 @@ const TL_EMAILS = {
   "Devadyuti Nag":"devadyuti.nag@ambak.com","Priyank Rawat":"priyank.rawat@ambak.com",
   "Christina Mary John":"christina.john@ambak.com"
 };
-const TL_AGENTS = {
-  "Anshul Kumar":["Ravi Kumar","Megha Jain","Alok .","Yash Verma","Shikha .","Pawan Kumar","Priya Bisht","Shalni Kumari"],
-  "Ashad Pirzade":["Dakshata Barku Raundhal","Kishor Bhandarkar","Mohammad Nashir Aslam Shaikh","Akshata Dattaram Chavan","Mahesh Shinge","Rameshwar Santosh Jadhav","VAISHALI LAXMAN JETHVA","Madhuri Sudhir Tambe","Sonali Dinesh Jawale","Kajal Prajapati","Dinar Dildar Hussain Khan","Rakesh Satyanarayana Mamidala","Ajay Damu Pawar","Janhavi Vilas Adivarekar","Anil Narsayya Keti","Amitkumar Rajendarkumar Peepal","Anita Baban Shinde"],
-  "Lukman Qureshi":["Bapurao Ramrao Gholap","Amit Krishnakumar Prajapati","Shubham Dilip Rathor","Riddhi Popat Shrisunder"],
-  "Sanchit Sisodiya":["Ravi Kumar Chaudhary","Sughar Singh Rajpoot","Ritika Kumari","Ridhi .","Akhilesh Singh","Gaurav Sain","Kuldeep .","Ravindra Kumar Sah","Shivam .","Komal Garg","Md Faiyaz","Sonu Dayma","Lokesh Yadav","Uttam Tiwari","Harendra Sharma","Sameer Singh","Mamta Kumari","Bhavana Prajapati","Jatin Kumar","Shivam Yadav","Rashid Ali"],
-  "Syed Adil":["Sanneboina Mahesh","Loganathan G","Shravya Manjunath","Abdul Kalam"]
-};
+
 const ALL_AGENTS = [
   {n:"Ravi Kumar",e:"ravi.singh@ambak.com"},{n:"Megha Jain",e:"megha.jain@ambak.com"},
   {n:"Alok .",e:"alok.kumar@ambak.com"},{n:"Yash Verma",e:"yash.verma@ambak.com"},
@@ -317,8 +313,8 @@ function onQAChange(){
   document.getElementById('agent-email').textContent='';
   const sel=document.getElementById('agent-sel');
   if(!qa){sel.innerHTML='<option value="">— select QA first —</option>';return;}
-  const list=TL_AGENTS[qa]?TL_AGENTS[qa].map(n=>ALL_AGENTS.find(a=>a.n===n)).filter(Boolean):ALL_AGENTS;
-  sel.innerHTML='<option value="">— select agent —</option>'+list.map(a=>`<option value="${a.n}" data-email="${a.e}">${a.n}</option>`).join('');
+  // ALL 15 (5 TLs + 10 QAs) see all agents
+  sel.innerHTML='<option value="">— select agent —</option>'+ALL_AGENTS.map(a=>`<option value="${a.n}" data-email="${a.e}">${a.n}</option>`).join('');
 }
 function onAgentChange(){
   const sel=document.getElementById('agent-sel');
@@ -385,9 +381,6 @@ function submitForm(){
     return;
   }
   const lid=document.getElementById('lead-id').value.trim();
-  if(lid && submittedLeadIds.includes(lid)){
-    if(!confirm('⚠ Lead ID "'+lid+'" was already submitted before. Submit again?')) return;
-  }
   const qaEmail=TL_EMAILS[qa]||'';
   const agentSel=document.getElementById('agent-sel');
   const agentOpt=agentSel.options[agentSel.selectedIndex];
