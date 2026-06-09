@@ -286,6 +286,7 @@ const FOLLOWUP_SECTIONS = [
 
 const RATING_VALS={Complete:100,Semi:50,Partial:33,No:0,NA:0};
 let callType="fresh", ratings={}, comments={};
+let submittedLeadIds=JSON.parse(localStorage.getItem("ambak_submitted_leads")||"[]");
 
 function onQAChange(){
   const qa=document.getElementById('qa-sel').value;
@@ -360,6 +361,10 @@ function submitForm(){
     msg.textContent='⚠ Please fill QA name, agent name, and call date before submitting.';
     return;
   }
+  const lid=document.getElementById('lead-id').value.trim();
+  if(lid && submittedLeadIds.includes(lid)){
+    if(!confirm('⚠ Lead ID "'+lid+'" was already submitted before. Submit again?')) return;
+  }
   const qaEmail=TL_EMAILS[qa]||'';
   const agentSel=document.getElementById('agent-sel');
   const agentOpt=agentSel.options[agentSel.selectedIndex];
@@ -393,6 +398,7 @@ function submitForm(){
     btn.disabled=false;
     msg.className='status-msg ok';
     msg.textContent='✓ Submitted successfully! Check your Google Sheet.';
+    if(lid){submittedLeadIds.push(lid);try{localStorage.setItem("ambak_submitted_leads",JSON.stringify(submittedLeadIds));}catch(ex){}}
   }).catch(()=>{
     btn.disabled=false;
     msg.className='status-msg err';
