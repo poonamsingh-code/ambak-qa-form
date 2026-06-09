@@ -175,10 +175,16 @@
     </div>
   </div>
 
-  <button class="btn-submit" id="submit-btn" onclick="submitForm()">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
-    Submit to Google Sheet
-  </button>
+  <div style="display:flex;gap:10px;margin-bottom:0">
+    <button onclick="resetForm()" style="padding:13px 20px;background:#fff;color:#4B5563;border:1px solid #E2E5EA;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='#FEF2F2';this.style.color='#DC2626';this.style.borderColor='#DC2626'" onmouseout="this.style.background='#fff';this.style.color='#4B5563';this.style.borderColor='#E2E5EA'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+      New Form
+    </button>
+    <button class="btn-submit" id="submit-btn" onclick="submitForm()" style="flex:1">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+      Submit to Google Sheet
+    </button>
+  </div>
   <div class="status-msg" id="status-msg"></div>
 </div>
 
@@ -392,6 +398,26 @@ function submitForm(){
     msg.className='status-msg err';
     msg.textContent='✗ Network error. Please try again.';
   });
+}
+
+function resetForm(){
+  if(!confirm('Reset all ratings and clear form? This cannot be undone.')) return;
+  ratings={};
+  comments={};
+  callType='fresh';
+  document.getElementById('btn-fresh').className='type-btn active-fresh';
+  document.getElementById('btn-followup').className='type-btn';
+  document.getElementById('qa-sel').value='';
+  document.getElementById('agent-sel').innerHTML='<option value="">— select QA first —</option>';
+  document.getElementById('qa-email').textContent='';
+  document.getElementById('agent-email').textContent='';
+  document.getElementById('lead-id').value='';
+  document.getElementById('call-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('audit-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('call-duration').value='';
+  document.getElementById('status-msg').textContent='';
+  document.getElementById('status-msg').className='status-msg';
+  renderSections();
 }
 
 document.getElementById('call-date').value=new Date().toISOString().split('T')[0];
