@@ -814,59 +814,46 @@ document.getElementById('modal-confirm-btn').addEventListener('click', function(
 });
 
 // ═══════════════════════════════════════════
-// ACTUAL SUBMIT
+// ACTUAL SUBMIT — uses GET request (100% works cross-origin)
 // ═══════════════════════════════════════════
 function doSubmit() {
   if (!pendingPayload) return;
   const msg = document.getElementById('status-msg');
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU1ETnRuqS6ZdUyp4dXmS5_Y0WO3CPxx0jYspZto-NfLwwPkWxZ2o-_n1I0xACm80N7w/exec";
   const submitBtn = document.querySelector('.btn-submit');
+
   msg.className = 'status-msg';
-  msg.textContent = 'Submitting… please wait';
+  msg.textContent = '⏳ Submitting… please wait';
   if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; }
 
-  const payload = JSON.stringify(pendingPayload);
+  // Encode full payload as URL param — GET requests work perfectly cross-origin with Apps Script
+  const encoded = encodeURIComponent(JSON.stringify(pendingPayload));
+  const url = SCRIPT_URL + '?payload=' + encoded;
 
-  // Generate a unique submission token so we can verify it landed
-  const token = 'sub_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
-  pendingPayload.token = token;
-
-  // Step 1: POST with no-cors (always reaches Apps Script even without CORS headers)
-  fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(pendingPayload)
-  })
-  .then(() => {
-    // Step 2: Wait 3s then verify via GET (Apps Script can respond to GET freely)
-    msg.textContent = 'Verifying submission…';
-    return new Promise(resolve => setTimeout(resolve, 3000));
-  })
-  .then(() => {
-    return fetch(SCRIPT_URL + '?verify=' + token, { method: 'GET', mode: 'cors' });
-  })
-  .then(res => res.json())
-  .then(result => {
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-    if (result.status === 'verified' || result.status === 'success') {
-      msg.className = 'status-msg ok';
-      msg.textContent = '✓ Submitted successfully! Data saved to Google Sheet.';
-    } else {
-      // POST reached Apps Script but verify failed — still likely saved
-      msg.className = 'status-msg ok';
-      msg.textContent = '✓ Submitted! Check your Google Sheet to confirm.';
-    }
-    afterSuccess();
-  })
-  .catch(() => {
-    // Verify GET failed (CORS on verify) — but the POST with no-cors DID send
-    // Apps Script always receives no-cors POST — show success
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-    msg.className = 'status-msg ok';
-    msg.textContent = '✓ Submitted! Check your Google Sheet — data should be there.';
-    afterSuccess();
-  });
+  fetch(url, { method: 'GET', mode: 'cors' })
+    .then(res => {
+      if (!res.ok) throw new Error('Network error: ' + res.status);
+      return res.json();
+    })
+    .then(result => {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
+      if (result.status === 'success') {
+        msg.className = 'status-msg ok';
+        msg.textContent = '✅ Submitted successfully! Data saved to Google Sheet (row ' + result.row + ').';
+        afterSuccess();
+      } else {
+        msg.className = 'status-msg err';
+        msg.textContent = '❌ Error: ' + (result.message || 'Unknown error. Check Apps Script logs.');
+        pendingPayload = null;
+      }
+    })
+    .catch(err => {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
+      msg.className = 'status-msg err';
+      msg.textContent = '❌ Could not reach Google Apps Script. Check your deployment URL.';
+      console.error('Submit error:', err);
+      pendingPayload = null;
+    });
 }
 
 function afterSuccess() {
