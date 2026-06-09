@@ -19,37 +19,18 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
-
-  /* ── Header ── */
   .header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
   .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;color:var(--text)}
   .logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
-  .header-right{display:flex;align-items:center;gap:10px}
   .badge{font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;background:var(--accent-light);color:var(--accent);font-family:'DM Mono',monospace}
-  .draft-indicator{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px}
-  .draft-dot{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-  /* ── Layout ── */
   .container{max-width:980px;margin:0 auto;padding:28px 24px 60px}
   .page-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:4px}
-  .page-sub{font-size:13px;color:var(--text3);margin-bottom:16px}
-
-  /* ── Progress indicator ── */
-  .progress-overview{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow)}
-  .progress-overview-bar{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
-  .progress-overview-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--fresh),var(--accent2));transition:width .4s}
-  .progress-overview-text{font-size:12px;color:var(--text2);white-space:nowrap;font-family:'DM Mono',monospace}
-  .progress-overview-pct{font-size:12px;font-weight:600;color:var(--accent);font-family:'DM Mono',monospace;white-space:nowrap}
-
-  /* ── Call Type Toggle ── */
+  .page-sub{font-size:13px;color:var(--text3);margin-bottom:24px}
   .type-toggle{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px;margin-bottom:20px;width:fit-content;gap:4px}
   .type-btn{padding:8px 22px;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--text2);background:transparent}
   .type-btn.active-fresh{background:var(--fresh);color:#fff;box-shadow:0 2px 8px rgba(99,102,241,.3)}
   .type-btn.active-followup{background:var(--followup);color:#fff;box-shadow:0 2px 8px rgba(8,145,178,.3)}
   .type-btn:not(.active-fresh):not(.active-followup):hover{background:var(--bg)}
-
-  /* ── Cards ── */
   .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
   .card-head{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface2)}
   .card-head-left{display:flex;align-items:center;gap:8px}
@@ -57,21 +38,13 @@
   .card-head h3{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text2)}
   .section-score{font-family:'DM Mono',monospace;font-size:12px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 10px}
   .section-score span{color:var(--accent);font-weight:500}
-
-  /* ── Meta grid ── */
   .meta-grid{display:grid;gap:12px;padding:16px 18px;grid-template-columns:repeat(3,1fr)}
   .g4{grid-template-columns:repeat(4,1fr)}
   .field label{display:block;font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
   .field select,.field input{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;transition:border-color .15s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
   .field input[type=date],.field input[type=text]{background-image:none;padding-right:10px}
   .field select:focus,.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,78,216,.08)}
-  .field.error select,.field.error input{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(220,38,38,.08)!important;animation:shake .3s}
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-  .field-error-msg{font-size:11px;color:var(--red);margin-top:3px;display:none}
-  .field.error .field-error-msg{display:block}
   .email-display{font-size:11px;color:var(--text3);margin-top:3px;font-family:'DM Mono',monospace;min-height:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-  /* ── Param table ── */
   .param-row{display:grid;grid-template-columns:24px 1fr 68px 128px 60px 1fr;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--border);transition:background .1s}
   .param-row:last-child{border-bottom:none}
   .param-row:hover{background:var(--surface2)}
@@ -94,8 +67,6 @@
   .param-header{display:grid;grid-template-columns:24px 1fr 68px 128px 60px 1fr;gap:10px;padding:8px 18px;border-bottom:1px solid var(--border);background:#FAFBFC}
   .param-header span{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)}
   .param-header span.center{text-align:center}
-
-  /* ── Score summary ── */
   .score-summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow-md);display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
   .score-big{font-size:42px;font-weight:600;font-family:'DM Mono',monospace;color:var(--text);line-height:1}
   .score-big span{font-size:20px;color:var(--text3);font-weight:400}
@@ -103,133 +74,30 @@
   .score-pct{font-size:28px;font-weight:600;font-family:'DM Mono',monospace;color:var(--accent);text-align:right}
   .progress-bar{height:6px;background:var(--bg);border-radius:3px;margin-top:12px;overflow:hidden}
   .progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
-
-  /* ── Submit area ── */
-  .submit-row{display:flex;gap:10px;margin-bottom:8px}
-  .btn-submit{flex:1;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:8px}
+  .btn-submit{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:8px}
   .btn-submit:hover{background:#1e40af;box-shadow:0 4px 14px rgba(29,78,216,.3);transform:translateY(-1px)}
   .btn-submit:active{transform:none}
-  .btn-reset{padding:13px 20px;background:var(--surface);color:var(--text2);border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap}
-  .btn-reset:hover{background:var(--red-light);color:var(--red);border-color:var(--red)}
-  .status-msg{text-align:center;font-size:13px;color:var(--text3);margin-top:8px;min-height:20px}
+  .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .status-msg{text-align:center;font-size:13px;color:var(--text3);margin-top:10px;min-height:20px}
   .status-msg.ok{color:var(--green)}.status-msg.err{color:var(--red)}
-
-  /* ── Confirmation Modal ── */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
-  .modal-overlay.visible{opacity:1;pointer-events:all}
-  .modal{background:var(--surface);border-radius:16px;padding:28px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);transform:translateY(16px);transition:transform .2s}
-  .modal-overlay.visible .modal{transform:translateY(0)}
-  .modal-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px}
-  .modal-sub{font-size:13px;color:var(--text3);margin-bottom:20px}
-  .modal-summary{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px}
-  .modal-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px}
-  .modal-row:last-child{border-bottom:none}
-  .modal-row-label{color:var(--text2)}
-  .modal-row-val{font-weight:500;color:var(--text);font-family:'DM Mono',monospace}
-  .modal-score-big{text-align:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:8px}
-  .modal-score-num{font-size:36px;font-weight:600;font-family:'DM Mono',monospace;color:var(--accent)}
-  .modal-score-pct{font-size:14px;color:var(--text3);margin-top:2px}
-  .grade-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;margin-left:8px}
-  .grade-a{background:#D1FAE5;color:#065F46}
-  .grade-b{background:#DBEAFE;color:#1D4ED8}
-  .grade-c{background:#FEF3C7;color:#92400E}
-  .grade-d{background:#FEE2E2;color:#991B1B}
-  .modal-btns{display:flex;gap:10px}
-  .modal-btn-confirm{flex:1;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
-  .modal-btn-confirm:hover{background:#1e40af}
-  .modal-btn-cancel{padding:11px 18px;background:var(--surface);color:var(--text2);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:background .15s}
-  .modal-btn-cancel:hover{background:var(--bg)}
-
-  /* ── Duplicate warning banner ── */
-  .dup-banner{background:#FEF3C7;border:1px solid #F59E0B;border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:#92400E;display:none;margin-bottom:12px;align-items:center;gap:8px}
-  .dup-banner.show{display:flex}
-
-  /* ── Reset confirm dialog ── */
-  .reset-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1001;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
-  .reset-modal-overlay.visible{opacity:1;pointer-events:all}
-  .reset-modal{background:var(--surface);border-radius:12px;padding:24px;max-width:360px;width:90%;box-shadow:0 20px 40px rgba(0,0,0,.15)}
-  .reset-modal h3{font-size:16px;font-weight:600;margin-bottom:8px}
-  .reset-modal p{font-size:13px;color:var(--text2);margin-bottom:20px}
-  .reset-modal-btns{display:flex;gap:8px}
-  .btn-reset-confirm{flex:1;padding:10px;background:var(--red);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer}
-  .btn-reset-cancel{padding:10px 16px;background:var(--surface);color:var(--text2);border:1px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
-
   @media(max-width:700px){
     .meta-grid,.g4{grid-template-columns:1fr 1fr}
     .param-row,.param-header{grid-template-columns:1fr 60px 110px 50px}
     .param-num,.comment-input,.param-header span:first-child,.param-header span:last-child{display:none}
     .header{padding:0 16px}
     .container{padding:16px 14px 48px}
-    .submit-row{flex-direction:column}
   }
 </style>
 </head>
 <body>
-
-<!-- Confirmation Modal -->
-<div class="modal-overlay" id="confirm-modal">
-  <div class="modal">
-    <div class="modal-title">Confirm Submission</div>
-    <div class="modal-sub">Please review before submitting to Google Sheet</div>
-    <div class="modal-summary">
-      <div class="modal-score-big">
-        <div class="modal-score-num" id="modal-score">—</div>
-        <div class="modal-score-pct" id="modal-pct">—</div>
-      </div>
-      <div class="modal-row"><span class="modal-row-label">QA Name</span><span class="modal-row-val" id="modal-qa">—</span></div>
-      <div class="modal-row"><span class="modal-row-label">Agent Name</span><span class="modal-row-val" id="modal-agent">—</span></div>
-      <div class="modal-row"><span class="modal-row-label">Lead ID</span><span class="modal-row-val" id="modal-lead">—</span></div>
-      <div class="modal-row"><span class="modal-row-label">Call Date</span><span class="modal-row-val" id="modal-date">—</span></div>
-      <div class="modal-row"><span class="modal-row-label">Call Type</span><span class="modal-row-val" id="modal-type">—</span></div>
-      <div class="modal-row"><span class="modal-row-label">Sections Rated</span><span class="modal-row-val" id="modal-rated">—</span></div>
-    </div>
-    <div class="modal-btns">
-      <button class="modal-btn-cancel" onclick="closeModal()">← Go Back</button>
-      <button class="modal-btn-confirm" id="modal-confirm-btn">Submit Now</button>
-    </div>
-  </div>
-</div>
-
-<!-- Reset Confirm Dialog -->
-<div class="reset-modal-overlay" id="reset-modal">
-  <div class="reset-modal">
-    <h3>Reset Form?</h3>
-    <p>All ratings, comments and call details will be cleared. This cannot be undone.</p>
-    <div class="reset-modal-btns">
-      <button class="btn-reset-cancel" onclick="closeResetModal()">Cancel</button>
-      <button class="btn-reset-confirm" onclick="confirmReset()">Yes, Reset</button>
-    </div>
-  </div>
-</div>
-
 <header class="header">
   <div class="logo"><div class="logo-icon">✦</div>Ambak Quality</div>
-  <div class="header-right">
-    <div class="draft-indicator" id="draft-indicator" style="display:none">
-      <div class="draft-dot"></div>Draft saved
-    </div>
-    <span class="badge">QA FORM v5</span>
-  </div>
+  <span class="badge">QA FORM v4</span>
 </header>
 
 <div class="container">
   <div class="page-title">Quality Evaluation Form</div>
   <p class="page-sub">Evaluate agent call quality · Scores auto-calculate from weightage</p>
-
-  <!-- Section-wise Progress Indicator -->
-  <div class="progress-overview">
-    <div class="progress-overview-bar">
-      <div class="progress-overview-fill" id="overview-fill" style="width:0%"></div>
-    </div>
-    <div class="progress-overview-text" id="overview-text">0 / 0 params rated</div>
-    <div class="progress-overview-pct" id="overview-pct">0%</div>
-  </div>
-
-  <!-- Duplicate Warning Banner -->
-  <div class="dup-banner" id="dup-banner">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <span id="dup-msg">This Lead ID may have already been audited.</span>
-  </div>
 
   <div class="type-toggle">
     <button class="type-btn active-fresh" id="btn-fresh" onclick="setType('fresh',this)">⬤ Fresh Call</button>
@@ -241,7 +109,7 @@
       <div class="card-head-left"><div class="section-dot" style="background:#6366F1"></div><h3>Call Details</h3></div>
     </div>
     <div class="meta-grid g4">
-      <div class="field" id="field-qa">
+      <div class="field">
         <label>QA Name (Team Lead)</label>
         <select id="qa-sel" onchange="onQAChange()">
           <option value="">— select QA —</option>
@@ -266,24 +134,21 @@
           </optgroup>
         </select>
         <div class="email-display" id="qa-email"></div>
-        <div class="field-error-msg">Please select a QA name</div>
       </div>
-      <div class="field" id="field-agent">
+      <div class="field">
         <label>Agent Name</label>
         <select id="agent-sel" onchange="onAgentChange()">
           <option value="">— select QA first —</option>
         </select>
         <div class="email-display" id="agent-email"></div>
-        <div class="field-error-msg">Please select an agent</div>
       </div>
       <div class="field">
         <label>Lead ID</label>
-        <input type="text" id="lead-id" placeholder="e.g. 190140" oninput="onLeadIdChange()">
+        <input type="text" id="lead-id" placeholder="e.g. 190140">
       </div>
-      <div class="field" id="field-date">
+      <div class="field">
         <label>Call Date &amp; Time</label>
         <input type="date" id="call-date">
-        <div class="field-error-msg">Please select a call date</div>
       </div>
       <div class="field">
         <label>Audit Date</label>
@@ -310,49 +175,31 @@
     </div>
   </div>
 
-  <div class="submit-row">
-    <button class="btn-reset" onclick="showResetModal()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-      New Form
-    </button>
-    <button class="btn-submit" onclick="showConfirmModal()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
-      Submit to Google Sheet
-    </button>
-  </div>
+  <button class="btn-submit" id="submit-btn" onclick="submitForm()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+    Submit to Google Sheet
+  </button>
   <div class="status-msg" id="status-msg"></div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-// 1. TL EMAIL MAP
-// ═══════════════════════════════════════════
 const TL_EMAILS = {
-  "Anshul Kumar":              "anshul.kumar@ambak.com",
-  "Ashad Pirzade":             "Ashad.pirzade@ambak.com",
-  "Lukman Qureshi":            "lukman.qureshi@ambak.com",
-  "Sanchit Sisodiya":          "Sanchit.sisodiya@ambak.com",
-  "Syed Adil":                 "syed.adil@ambak.com",
-  "Khyati Choudhary":          "khyati.choudhary@ambak.com",
-  "Riddhi Gala":               "riddhi.gala@ambak.com",
-  "Saivikrama Vikram Angrish": "sai.angrish@ambak.com",
-  "Ankit .":                   "ankit.@ambak.com",
-  "Hitesh Deka":               "hitesh.deka@ambak.com",
-  "Sunny Bari":                "sunny.bari@ambak.com",
-  "Puneet Ranjan":             "puneet.ranjan@ambak.com",
-  "Devadyuti Nag":             "devadyuti.nag@ambak.com",
-  "Priyank Rawat":             "priyank.rawat@ambak.com",
-  "Christina Mary John":       "christina.john@ambak.com"
+  "Anshul Kumar":"anshul.kumar@ambak.com","Ashad Pirzade":"Ashad.pirzade@ambak.com",
+  "Lukman Qureshi":"lukman.qureshi@ambak.com","Sanchit Sisodiya":"Sanchit.sisodiya@ambak.com",
+  "Syed Adil":"syed.adil@ambak.com","Khyati Choudhary":"khyati.choudhary@ambak.com",
+  "Riddhi Gala":"riddhi.gala@ambak.com","Saivikrama Vikram Angrish":"sai.angrish@ambak.com",
+  "Ankit .":"ankit.@ambak.com","Hitesh Deka":"hitesh.deka@ambak.com",
+  "Sunny Bari":"sunny.bari@ambak.com","Puneet Ranjan":"puneet.ranjan@ambak.com",
+  "Devadyuti Nag":"devadyuti.nag@ambak.com","Priyank Rawat":"priyank.rawat@ambak.com",
+  "Christina Mary John":"christina.john@ambak.com"
 };
-
 const TL_AGENTS = {
-  "Anshul Kumar":    ["Ravi Kumar","Megha Jain","Alok .","Yash Verma","Shikha .","Pawan Kumar","Priya Bisht","Shalni Kumari"],
-  "Ashad Pirzade":   ["Dakshata Barku Raundhal","Kishor Bhandarkar","Mohammad Nashir Aslam Shaikh","Akshata Dattaram Chavan","Mahesh Shinge","Rameshwar Santosh Jadhav","VAISHALI LAXMAN JETHVA","Madhuri Sudhir Tambe","Sonali Dinesh Jawale","Kajal Prajapati","Dinar Dildar Hussain Khan","Rakesh Satyanarayana Mamidala","Ajay Damu Pawar","Janhavi Vilas Adivarekar","Anil Narsayya Keti","Amitkumar Rajendarkumar Peepal","Anita Baban Shinde"],
-  "Lukman Qureshi":  ["Bapurao Ramrao Gholap","Amit Krishnakumar Prajapati","Shubham Dilip Rathor","Riddhi Popat Shrisunder"],
+  "Anshul Kumar":["Ravi Kumar","Megha Jain","Alok .","Yash Verma","Shikha .","Pawan Kumar","Priya Bisht","Shalni Kumari"],
+  "Ashad Pirzade":["Dakshata Barku Raundhal","Kishor Bhandarkar","Mohammad Nashir Aslam Shaikh","Akshata Dattaram Chavan","Mahesh Shinge","Rameshwar Santosh Jadhav","VAISHALI LAXMAN JETHVA","Madhuri Sudhir Tambe","Sonali Dinesh Jawale","Kajal Prajapati","Dinar Dildar Hussain Khan","Rakesh Satyanarayana Mamidala","Ajay Damu Pawar","Janhavi Vilas Adivarekar","Anil Narsayya Keti","Amitkumar Rajendarkumar Peepal","Anita Baban Shinde"],
+  "Lukman Qureshi":["Bapurao Ramrao Gholap","Amit Krishnakumar Prajapati","Shubham Dilip Rathor","Riddhi Popat Shrisunder"],
   "Sanchit Sisodiya":["Ravi Kumar Chaudhary","Sughar Singh Rajpoot","Ritika Kumari","Ridhi .","Akhilesh Singh","Gaurav Sain","Kuldeep .","Ravindra Kumar Sah","Shivam .","Komal Garg","Md Faiyaz","Sonu Dayma","Lokesh Yadav","Uttam Tiwari","Harendra Sharma","Sameer Singh","Mamta Kumari","Bhavana Prajapati","Jatin Kumar","Shivam Yadav","Rashid Ali"],
-  "Syed Adil":       ["Sanneboina Mahesh","Loganathan G","Shravya Manjunath","Abdul Kalam"]
+  "Syed Adil":["Sanneboina Mahesh","Loganathan G","Shravya Manjunath","Abdul Kalam"]
 };
-
 const ALL_AGENTS = [
   {n:"Ravi Kumar",e:"ravi.singh@ambak.com"},{n:"Megha Jain",e:"megha.jain@ambak.com"},
   {n:"Alok .",e:"alok.kumar@ambak.com"},{n:"Yash Verma",e:"yash.verma@ambak.com"},
@@ -397,581 +244,159 @@ const ALL_AGENTS = [
   {n:"Abdul Kalam",e:"abdul.kalam@ambak.com"}
 ];
 
-// ═══════════════════════════════════════════
-// FRESH PARAMS — 38 params
-// ═══════════════════════════════════════════
 const FRESH_SECTIONS = [
-  {id:"call-opening",name:"Call Opening",color:"#6366F1",params:[
-    {n:"Greet & Welcome",w:3},{n:"Self & Ambak Intro",w:3},{n:"RPC Confirm",w:3},
-    {n:"Lead source mention (if available)",w:3},{n:"Purpose of call",w:3}]},
-  {id:"loan",name:"Loan",color:"#0EA5E9",params:[
-    {n:"Confirm loan amount",w:3},{n:"Confirm loan type",w:3}]},
-  {id:"about-ambak",name:"About Ambak",color:"#8B5CF6",params:[
-    {n:"Ambak advantages explained",w:8},{n:"Ambak Process",w:8}]},
-  {id:"property",name:"Property Details",color:"#F59E0B",params:[
-    {n:"Property identify",w:10},{n:"Property not identify",w:10}]},
-  {id:"customer-profiling",name:"Customer Profiling",color:"#10B981",params:[
-    {n:"Primary Applicant",w:10},{n:"Co-applicant",w:10}]},
-  {id:"salary",name:"Customer Salary Details",color:"#14B8A6",params:[
-    {n:"Primary Applicant & Co-applicant",w:10}]},
-  {id:"preferences",name:"Customer Preferences",color:"#84CC16",params:[
-    {n:"Customer offer preference asked",w:10}]},
-  {id:"cibil",name:"CIBIL Check",color:"#06B6D4",params:[
-    {n:"Customer informed about soft pull",w:8}]},
-  {id:"lead-status",name:"Lead Status",color:"#0EA5E9",params:[
-    {n:"Lead Not qualified",w:8},{n:"Lead Qualified",w:8}]},
-  {id:"offer",name:"Offer Details",color:"#EC4899",params:[
-    {n:"Should share the approx. amount of ROI",w:5}]},
-  {id:"documents",name:"Documents",color:"#10B981",params:[
-    {n:"Documents explained that are required",w:8}]},
-  {id:"objection",name:"Objection Handling",color:"#F97316",params:[
-    {n:"Ambak related",w:5},{n:"Salary/Profile",w:5},{n:"Loan Process Related",w:5},{n:"Others",w:5}]},
-  {id:"tat",name:"TAT",color:"#14B8A6",params:[
-    {n:"All TAT expected explained",w:8},{n:"Further process",w:6}]},
-  {id:"callback",name:"Callback",color:"#8B5CF6",params:[
-    {n:"Callback should be confirm",w:5}]},
-  {id:"call-etiquette",name:"Call Etiquette",color:"#6366F1",params:[
-    {n:"Mute",w:2},{n:"Dead Air",w:1},{n:"Call Duration",w:5},
-    {n:"Tone/Confidence/Non-attentive",w:2},{n:"Acknowledge/Appreciation/Apologies",w:2},
-    {n:"Empathy/Potential mirroring language",w:2},
-    {n:"Close Ended question during the call",w:3},{n:"Open Ended question during the call",w:3}]},
-  {id:"call-closure",name:"Call Closure",color:"#DC2626",params:[
-    {n:"Incorrect/Irrelevant conversation found",w:5},
-    {n:"Customer called back after call disconnection",w:5},
-    {n:"Call Closure + Power Closure, Pleasantries & Call Closure Statements Used",w:2}]}
+  {id:"call-opening",name:"Call Opening",color:"#6366F1",params:[{n:"Greet & Welcome",w:3},{n:"Self & Ambak Intro",w:3},{n:"RPC Confirm",w:3},{n:"Lead source mention (if available)",w:3},{n:"Purpose of call",w:3}]},
+  {id:"loan",name:"Loan",color:"#0EA5E9",params:[{n:"Confirm loan amount",w:3},{n:"Confirm loan type",w:3}]},
+  {id:"about-ambak",name:"About Ambak",color:"#8B5CF6",params:[{n:"Ambak advantages explained",w:8},{n:"Ambak Process",w:8}]},
+  {id:"property",name:"Property Details",color:"#F59E0B",params:[{n:"Property identify",w:10},{n:"Property not identify",w:10}]},
+  {id:"customer-profiling",name:"Customer Profiling",color:"#10B981",params:[{n:"Primary Applicant",w:10},{n:"Co-applicant",w:10}]},
+  {id:"salary",name:"Customer Salary Details",color:"#14B8A6",params:[{n:"Primary Applicant & Co-applicant",w:10}]},
+  {id:"preferences",name:"Customer Preferences",color:"#84CC16",params:[{n:"Customer offer preference asked",w:10}]},
+  {id:"cibil",name:"CIBIL Check",color:"#06B6D4",params:[{n:"Customer informed about soft pull",w:8}]},
+  {id:"lead-status",name:"Lead Status",color:"#0EA5E9",params:[{n:"Lead Not qualified",w:8},{n:"Lead Qualified",w:8}]},
+  {id:"offer",name:"Offer Details",color:"#EC4899",params:[{n:"Should share the approx. amount of ROI",w:5}]},
+  {id:"documents",name:"Documents",color:"#10B981",params:[{n:"Documents explained that are required",w:8}]},
+  {id:"objection",name:"Objection Handling",color:"#F97316",params:[{n:"Ambak related",w:5},{n:"Salary/Profile",w:5},{n:"Loan Process Related",w:5},{n:"Others",w:5}]},
+  {id:"tat",name:"TAT",color:"#14B8A6",params:[{n:"All TAT expected explained",w:8},{n:"Further process",w:6}]},
+  {id:"callback",name:"Callback",color:"#8B5CF6",params:[{n:"Callback should be confirm",w:5}]},
+  {id:"call-etiquette",name:"Call Etiquette",color:"#6366F1",params:[{n:"Mute",w:2},{n:"Dead Air",w:1},{n:"Call Duration",w:5},{n:"Tone/Confidence/Non-attentive",w:2},{n:"Acknowledge/Appreciation/Apologies",w:2},{n:"Empathy/Potential mirroring language",w:2},{n:"Close Ended question during the call",w:3},{n:"Open Ended question during the call",w:3}]},
+  {id:"call-closure",name:"Call Closure",color:"#DC2626",params:[{n:"Incorrect/Irrelevant conversation found",w:5},{n:"Customer called back after call disconnection",w:5},{n:"Call Closure + Power Closure, Pleasantries & Call Closure Statements Used",w:2}]}
 ];
 
-// ═══════════════════════════════════════════
-// FOLLOWUP PARAMS — 29 params
-// ═══════════════════════════════════════════
 const FOLLOWUP_SECTIONS = [
-  {id:"call-opening",name:"Call Opening",color:"#6366F1",params:[
-    {n:"Greet & Welcome",w:3},{n:"Self & Ambak Intro",w:3},{n:"RPC Confirm",w:3}]},
-  {id:"prev-context",name:"Previous Context",color:"#8B5CF6",params:[
-    {n:"Previous context",w:5}]},
-  {id:"cibil",name:"CIBIL Check",color:"#06B6D4",params:[
-    {n:"Customer informed about soft pull",w:8}]},
-  {id:"lead-status",name:"Lead Status",color:"#0EA5E9",params:[
-    {n:"Lead Not qualified",w:8}]},
-  {id:"documents",name:"Documents",color:"#10B981",params:[
-    {n:"Documents explained that are required",w:8}]},
-  {id:"login-charges",name:"Login Charges",color:"#F59E0B",params:[
-    {n:"All charges explained",w:8}]},
-  {id:"login-confirm",name:"Login Confirmation",color:"#EF4444",params:[
-    {n:"Customer consent taken for login",w:8},
-    {n:"Login done on time",w:8},
-    {n:"Communication sent to customer at every step",w:8}]},
-  {id:"objection",name:"Objection Handling",color:"#F97316",params:[
-    {n:"Ambak related",w:5},{n:"Salary/Profile",w:5},{n:"Loan Process Related",w:5},{n:"Others",w:5}]},
-  {id:"tat",name:"TAT",color:"#14B8A6",params:[
-    {n:"All TAT expected explained",w:8},{n:"Further process",w:6}]},
-  {id:"callback",name:"Callback",color:"#8B5CF6",params:[
-    {n:"Callback should be confirm",w:5}]},
-  {id:"call-etiquette",name:"Call Etiquette",color:"#6366F1",params:[
-    {n:"Mute",w:2},{n:"Dead Air",w:1},{n:"Call Duration",w:5},
-    {n:"Tone/Confidence/Non-attentive",w:2},{n:"Acknowledge/Appreciation/Apologies",w:2},
-    {n:"Empathy/Potential mirroring language",w:2},
-    {n:"Close Ended question during the call",w:3},{n:"Open Ended question during the call",w:3}]},
-  {id:"call-closure",name:"Call Closure",color:"#DC2626",params:[
-    {n:"Incorrect/Irrelevant conversation found",w:5},
-    {n:"Customer called back after call disconnection",w:5},
-    {n:"Call Closure + Power Closure, Pleasantries & Call Closure Statements Used",w:2}]}
+  {id:"call-opening",name:"Call Opening",color:"#6366F1",params:[{n:"Greet & Welcome",w:3},{n:"Self & Ambak Intro",w:3},{n:"RPC Confirm",w:3}]},
+  {id:"prev-context",name:"Previous Context",color:"#8B5CF6",params:[{n:"Previous context",w:5}]},
+  {id:"cibil",name:"CIBIL Check",color:"#06B6D4",params:[{n:"Customer informed about soft pull",w:8}]},
+  {id:"lead-status",name:"Lead Status",color:"#0EA5E9",params:[{n:"Lead Not qualified",w:8}]},
+  {id:"documents",name:"Documents",color:"#10B981",params:[{n:"Documents explained that are required",w:8}]},
+  {id:"login-charges",name:"Login Charges",color:"#F59E0B",params:[{n:"All charges explained",w:8}]},
+  {id:"login-confirm",name:"Login Confirmation",color:"#EF4444",params:[{n:"Customer consent taken for login",w:8},{n:"Login done on time",w:8},{n:"Communication sent to customer at every step",w:8}]},
+  {id:"objection",name:"Objection Handling",color:"#F97316",params:[{n:"Ambak related",w:5},{n:"Salary/Profile",w:5},{n:"Loan Process Related",w:5},{n:"Others",w:5}]},
+  {id:"tat",name:"TAT",color:"#14B8A6",params:[{n:"All TAT expected explained",w:8},{n:"Further process",w:6}]},
+  {id:"callback",name:"Callback",color:"#8B5CF6",params:[{n:"Callback should be confirm",w:5}]},
+  {id:"call-etiquette",name:"Call Etiquette",color:"#6366F1",params:[{n:"Mute",w:2},{n:"Dead Air",w:1},{n:"Call Duration",w:5},{n:"Tone/Confidence/Non-attentive",w:2},{n:"Acknowledge/Appreciation/Apologies",w:2},{n:"Empathy/Potential mirroring language",w:2},{n:"Close Ended question during the call",w:3},{n:"Open Ended question during the call",w:3}]},
+  {id:"call-closure",name:"Call Closure",color:"#DC2626",params:[{n:"Incorrect/Irrelevant conversation found",w:5},{n:"Customer called back after call disconnection",w:5},{n:"Call Closure + Power Closure, Pleasantries & Call Closure Statements Used",w:2}]}
 ];
 
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
-const RATING_VALS = {Complete:100,Semi:50,Partial:33,No:0,NA:0};
-let callType = "fresh";
-let ratings = {};
-let comments = {};
-const DRAFT_KEY = "ambak_qa_draft";
-let draftTimer = null;
-let submittedLeadIds = JSON.parse(localStorage.getItem("ambak_submitted_leads")||"[]");
-// pending submit payload for modal confirm
-let pendingPayload = null;
+const RATING_VALS={Complete:100,Semi:50,Partial:33,No:0,NA:0};
+let callType="fresh", ratings={}, comments={};
 
-// ═══════════════════════════════════════════
-// AUTO-SAVE DRAFT
-// ═══════════════════════════════════════════
-function saveDraft() {
-  const draft = {
-    callType,
-    ratings,
-    comments,
-    qa: document.getElementById('qa-sel').value,
-    agent: document.getElementById('agent-sel').value,
-    leadId: document.getElementById('lead-id').value,
-    callDate: document.getElementById('call-date').value,
-    auditDate: document.getElementById('audit-date').value,
-    callDuration: document.getElementById('call-duration').value,
-    ts: Date.now()
-  };
-  try {
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-    document.getElementById('draft-indicator').style.display = 'flex';
-  } catch(e) {}
+function onQAChange(){
+  const qa=document.getElementById('qa-sel').value;
+  document.getElementById('qa-email').textContent=qa?(TL_EMAILS[qa]||''):'';
+  document.getElementById('agent-email').textContent='';
+  const sel=document.getElementById('agent-sel');
+  if(!qa){sel.innerHTML='<option value="">— select QA first —</option>';return;}
+  const list=TL_AGENTS[qa]?TL_AGENTS[qa].map(n=>ALL_AGENTS.find(a=>a.n===n)).filter(Boolean):ALL_AGENTS;
+  sel.innerHTML='<option value="">— select agent —</option>'+list.map(a=>`<option value="${a.n}" data-email="${a.e}">${a.n}</option>`).join('');
 }
-
-function loadDraft() {
-  try {
-    const raw = localStorage.getItem(DRAFT_KEY);
-    if (!raw) return;
-    const d = JSON.parse(raw);
-    // Only restore if less than 24 hours old
-    if (Date.now() - d.ts > 86400000) { localStorage.removeItem(DRAFT_KEY); return; }
-
-    callType = d.callType || 'fresh';
-    ratings = d.ratings || {};
-    comments = d.comments || {};
-
-    // Set call type button
-    document.getElementById('btn-fresh').className = 'type-btn' + (callType==='fresh'?' active-fresh':'');
-    document.getElementById('btn-followup').className = 'type-btn' + (callType==='followup'?' active-followup':'');
-
-    // Restore meta fields
-    if (d.qa) {
-      document.getElementById('qa-sel').value = d.qa;
-      onQAChange();
-      document.getElementById('qa-sel').value = d.qa;
-      document.getElementById('qa-email').textContent = TL_EMAILS[d.qa]||'';
-    }
-    setTimeout(() => {
-      if (d.agent) {
-        document.getElementById('agent-sel').value = d.agent;
-        onAgentChange();
-      }
-    }, 50);
-    if (d.leadId)       document.getElementById('lead-id').value = d.leadId;
-    if (d.callDate)     document.getElementById('call-date').value = d.callDate;
-    if (d.auditDate)    document.getElementById('audit-date').value = d.auditDate;
-    if (d.callDuration) document.getElementById('call-duration').value = d.callDuration;
-
-    document.getElementById('draft-indicator').style.display = 'flex';
-  } catch(e) {}
+function onAgentChange(){
+  const sel=document.getElementById('agent-sel');
+  const opt=sel.options[sel.selectedIndex];
+  document.getElementById('agent-email').textContent=opt?(opt.dataset.email||''):'';
 }
-
-function scheduleSave() {
-  clearTimeout(draftTimer);
-  draftTimer = setTimeout(saveDraft, 1500);
-}
-
-function clearDraft() {
-  try { localStorage.removeItem(DRAFT_KEY); } catch(e) {}
-  document.getElementById('draft-indicator').style.display = 'none';
-}
-
-// ═══════════════════════════════════════════
-// DUPLICATE GUARD
-// ═══════════════════════════════════════════
-function onLeadIdChange() {
-  scheduleSave();
-  const lid = document.getElementById('lead-id').value.trim();
-  const banner = document.getElementById('dup-banner');
-  if (lid && submittedLeadIds.includes(lid)) {
-    document.getElementById('dup-msg').textContent = `⚠ Lead ID "${lid}" was already audited. Double-check before submitting.`;
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-}
-
-// ═══════════════════════════════════════════
-// DROPDOWN LOGIC
-// ═══════════════════════════════════════════
-function onQAChange() {
-  const qa = document.getElementById('qa-sel').value;
-  document.getElementById('qa-email').textContent = qa ? (TL_EMAILS[qa]||'') : '';
-  document.getElementById('agent-email').textContent = '';
-  clearFieldError('field-qa');
-  const sel = document.getElementById('agent-sel');
-  if (!qa) { sel.innerHTML = '<option value="">— select QA first —</option>'; scheduleSave(); return; }
-  const list = TL_AGENTS[qa]
-    ? TL_AGENTS[qa].map(n => ALL_AGENTS.find(a => a.n===n)).filter(Boolean)
-    : ALL_AGENTS;
-  sel.innerHTML = '<option value="">— select agent —</option>' +
-    list.map(a => `<option value="${a.n}" data-email="${a.e}">${a.n}</option>`).join('');
-  scheduleSave();
-}
-
-function onAgentChange() {
-  const sel = document.getElementById('agent-sel');
-  const opt = sel.options[sel.selectedIndex];
-  document.getElementById('agent-email').textContent = opt ? (opt.dataset.email||'') : '';
-  clearFieldError('field-agent');
-  scheduleSave();
-}
-
-// ═══════════════════════════════════════════
-// FIELD VALIDATION HELPERS
-// ═══════════════════════════════════════════
-function showFieldError(fieldId) {
-  const el = document.getElementById(fieldId);
-  if (el) el.classList.add('error');
-}
-function clearFieldError(fieldId) {
-  const el = document.getElementById(fieldId);
-  if (el) el.classList.remove('error');
-}
-function clearAllErrors() {
-  ['field-qa','field-agent','field-date'].forEach(clearFieldError);
-}
-
-// ═══════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════
-function setType(t, btn) {
-  callType = t;
-  document.getElementById('btn-fresh').className = 'type-btn'+(t==='fresh'?' active-fresh':'');
-  document.getElementById('btn-followup').className = 'type-btn'+(t==='followup'?' active-followup':'');
+function setType(t,btn){
+  callType=t;
+  document.getElementById('btn-fresh').className='type-btn'+(t==='fresh'?' active-fresh':'');
+  document.getElementById('btn-followup').className='type-btn'+(t==='followup'?' active-followup':'');
   renderSections();
-  scheduleSave();
 }
+function safeId(s){return s.replace(/[^a-zA-Z0-9]/g,'_');}
+function getSections(){return callType==='fresh'?FRESH_SECTIONS:FOLLOWUP_SECTIONS;}
 
-function safeId(s) { return s.replace(/[^a-zA-Z0-9]/g,'_'); }
-function getSections() { return callType==='fresh' ? FRESH_SECTIONS : FOLLOWUP_SECTIONS; }
-
-function renderSections() {
-  let html = '';
-  getSections().forEach(sec => {
-    let secTot=0, secMax=0;
-    sec.params.forEach(p => {
-      const k=sec.id+'|'+p.n;
-      if(ratings[k]) secTot += p.w*(RATING_VALS[ratings[k]]||0)/100;
-      if(p.w>0) secMax += p.w;
-    });
-    html += `<div class="card">
-      <div class="card-head">
-        <div class="card-head-left"><div class="section-dot" style="background:${sec.color}"></div><h3>${sec.name}</h3></div>
-        <div class="section-score" id="ss-${sec.id}"><span>${secTot.toFixed(1)}</span> / ${secMax} pts</div>
-      </div>
-      <div class="param-header"><span>#</span><span>Parameter</span><span class="center">Weight</span><span class="center">Rating</span><span class="center">Score</span><span>Comment</span></div>
-      <div class="param-table">`;
-    sec.params.forEach((p,i) => {
-      const k=sec.id+'|'+p.n;
-      const r=ratings[k]||'', c=comments[k]||'';
+function renderSections(){
+  let html='';
+  getSections().forEach(sec=>{
+    let secTot=0,secMax=0;
+    sec.params.forEach(p=>{const k=sec.id+'|'+p.n;if(ratings[k])secTot+=p.w*(RATING_VALS[ratings[k]]||0)/100;if(p.w>0)secMax+=p.w;});
+    html+=`<div class="card"><div class="card-head"><div class="card-head-left"><div class="section-dot" style="background:${sec.color}"></div><h3>${sec.name}</h3></div><div class="section-score" id="ss-${sec.id}"><span>${secTot.toFixed(1)}</span> / ${secMax} pts</div></div><div class="param-header"><span>#</span><span>Parameter</span><span class="center">Weight</span><span class="center">Rating</span><span class="center">Score</span><span>Comment</span></div><div class="param-table">`;
+    sec.params.forEach((p,i)=>{
+      const k=sec.id+'|'+p.n,r=ratings[k]||'',c=comments[k]||'';
       const sc=r?p.w*(RATING_VALS[r]||0)/100:null;
-      html += `<div class="param-row">
-        <div class="param-num">${i+1}</div>
-        <div class="param-name">${p.n}</div>
-        <div class="param-wt">${p.w} pt${p.w!==1?'s':''}</div>
-        <select class="rating-sel${r?' r-'+r.toLowerCase():''}" data-raw="${k}" data-w="${p.w}" onchange="onRate(this)">
-          <option value="">— rate —</option>
-          <option${r==='Complete'?' selected':''}>Complete</option>
-          <option${r==='Semi'?' selected':''}>Semi</option>
-          <option${r==='Partial'?' selected':''}>Partial</option>
-          <option${r==='No'?' selected':''}>No</option>
-          <option${r==='NA'?' selected':''}>NA</option>
-        </select>
-        <div class="score-chip${sc===null?'':sc>0?' scored':' zero'}" id="chip-${safeId(k)}">${sc!==null?sc.toFixed(1):'—'}</div>
-        <input class="comment-input" type="text" placeholder="Add comment…" value="${c}" data-raw="${k}" oninput="onComment(this)">
-      </div>`;
+      html+=`<div class="param-row"><div class="param-num">${i+1}</div><div class="param-name">${p.n}</div><div class="param-wt">${p.w} pt${p.w!==1?'s':''}</div><select class="rating-sel${r?' r-'+r.toLowerCase():''}" data-raw="${k}" data-w="${p.w}" onchange="onRate(this)"><option value="">— rate —</option><option${r==='Complete'?' selected':''}>Complete</option><option${r==='Semi'?' selected':''}>Semi</option><option${r==='Partial'?' selected':''}>Partial</option><option${r==='No'?' selected':''}>No</option><option${r==='NA'?' selected':''}>NA</option></select><div class="score-chip${sc===null?'':sc>0?' scored':' zero'}" id="chip-${safeId(k)}">${sc!==null?sc.toFixed(1):'—'}</div><input class="comment-input" type="text" placeholder="Add comment…" value="${c}" data-raw="${k}" oninput="onComment(this)"></div>`;
     });
-    html += `</div></div>`;
+    html+=`</div></div>`;
   });
-  document.getElementById('sections-wrap').innerHTML = html;
+  document.getElementById('sections-wrap').innerHTML=html;
   updateTotal();
-  updateOverviewProgress();
 }
 
-function onRate(sel) {
-  const k=sel.dataset.raw, w=parseFloat(sel.dataset.w), v=sel.value;
+function onRate(sel){
+  const k=sel.dataset.raw,w=parseFloat(sel.dataset.w),v=sel.value;
   ratings[k]=v;
   const sc=v?w*(RATING_VALS[v]||0)/100:null;
   const chip=document.getElementById('chip-'+safeId(k));
-  if(chip){chip.textContent=sc!==null?sc.toFixed(1):'—';chip.className='score-chip'+(sc===null?'':sc>0?' scored':' zero')}
+  if(chip){chip.textContent=sc!==null?sc.toFixed(1):'—';chip.className='score-chip'+(sc===null?'':sc>0?' scored':' zero');}
   sel.className='rating-sel'+(v?' r-'+v.toLowerCase():'');
   const secId=k.split('|')[0];
   const sec=getSections().find(s=>s.id===secId);
-  if(sec){
-    let t=0,m=0;
-    sec.params.forEach(p=>{const pk=sec.id+'|'+p.n;if(ratings[pk])t+=p.w*(RATING_VALS[ratings[pk]]||0)/100;if(p.w>0)m+=p.w;});
-    const el=document.getElementById('ss-'+sec.id);
-    if(el) el.innerHTML=`<span>${t.toFixed(1)}</span> / ${m} pts`;
-  }
+  if(sec){let t=0,m=0;sec.params.forEach(p=>{const pk=sec.id+'|'+p.n;if(ratings[pk])t+=p.w*(RATING_VALS[ratings[pk]]||0)/100;if(p.w>0)m+=p.w;});const el=document.getElementById('ss-'+sec.id);if(el)el.innerHTML=`<span>${t.toFixed(1)}</span> / ${m} pts`;}
   updateTotal();
-  updateOverviewProgress();
-  scheduleSave();
 }
-
-function onComment(inp) { comments[inp.dataset.raw]=inp.value; scheduleSave(); }
-
-function updateTotal() {
+function onComment(inp){comments[inp.dataset.raw]=inp.value;}
+function updateTotal(){
   let t=0,m=0;
-  getSections().forEach(sec=>sec.params.forEach(p=>{
-    if(p.w>0)m+=p.w;
-    const k=sec.id+'|'+p.n;
-    if(ratings[k])t+=p.w*(RATING_VALS[ratings[k]]||0)/100;
-  }));
+  getSections().forEach(sec=>sec.params.forEach(p=>{if(p.w>0)m+=p.w;const k=sec.id+'|'+p.n;if(ratings[k])t+=p.w*(RATING_VALS[ratings[k]]||0)/100;}));
   document.getElementById('total-score').innerHTML=`${t.toFixed(1)}<span> / <span id="max-score">${m}</span></span>`;
   const pct=m?Math.round(t/m*100):0;
   document.getElementById('pct-score').textContent=pct+'%';
   document.getElementById('prog-fill').style.width=pct+'%';
 }
 
-// ═══════════════════════════════════════════
-// SECTION-WISE PROGRESS INDICATOR
-// ═══════════════════════════════════════════
-function updateOverviewProgress() {
-  let rated=0, total=0;
-  getSections().forEach(sec=>sec.params.forEach(p=>{
-    total++;
-    const k=sec.id+'|'+p.n;
-    if(ratings[k]) rated++;
-  }));
-  const pct = total ? Math.round(rated/total*100) : 0;
-  document.getElementById('overview-fill').style.width = pct+'%';
-  document.getElementById('overview-text').textContent = `${rated} / ${total} params rated`;
-  document.getElementById('overview-pct').textContent = pct+'%';
-}
-
-// ═══════════════════════════════════════════
-// GRADE HELPER
-// ═══════════════════════════════════════════
-function getGrade(pct) {
-  if (pct >= 90) return {label:'A',cls:'grade-a'};
-  if (pct >= 75) return {label:'B',cls:'grade-b'};
-  if (pct >= 60) return {label:'C',cls:'grade-c'};
-  return {label:'D',cls:'grade-d'};
-}
-
-// ═══════════════════════════════════════════
-// CONFIRMATION MODAL
-// ═══════════════════════════════════════════
-function showConfirmModal() {
-  clearAllErrors();
-  const qa    = document.getElementById('qa-sel').value;
-  const agent = document.getElementById('agent-sel').value;
-  const callDate = document.getElementById('call-date').value;
-  const msg   = document.getElementById('status-msg');
-
-  let hasErr = false;
-  if (!qa)       { showFieldError('field-qa');    hasErr=true; }
-  if (!agent)    { showFieldError('field-agent'); hasErr=true; }
-  if (!callDate) { showFieldError('field-date');  hasErr=true; }
-  if (hasErr) {
+function submitForm(){
+  const qa=document.getElementById('qa-sel').value;
+  const agent=document.getElementById('agent-sel').value;
+  const callDate=document.getElementById('call-date').value;
+  const msg=document.getElementById('status-msg');
+  const btn=document.getElementById('submit-btn');
+  if(!qa||!agent||!callDate){
     msg.className='status-msg err';
-    msg.textContent='⚠ Please fill the highlighted fields before submitting.';
-    // scroll to top of form
-    document.querySelector('.card').scrollIntoView({behavior:'smooth'});
+    msg.textContent='⚠ Please fill QA name, agent name, and call date before submitting.';
     return;
   }
-
-  // Build payload
-  const qaEmail      = TL_EMAILS[qa]||'';
-  const agentSel     = document.getElementById('agent-sel');
-  const agentOpt     = agentSel.options[agentSel.selectedIndex];
-  const agentEmail   = agentOpt?(agentOpt.dataset.email||''):'';
-  const leadId       = document.getElementById('lead-id').value;
-  const auditDate    = document.getElementById('audit-date').value;
-  const callDuration = document.getElementById('call-duration').value;
+  const qaEmail=TL_EMAILS[qa]||'';
+  const agentSel=document.getElementById('agent-sel');
+  const agentOpt=agentSel.options[agentSel.selectedIndex];
+  const agentEmail=agentOpt?(agentOpt.dataset.email||''):'';
+  const leadId=document.getElementById('lead-id').value;
+  const auditDate=document.getElementById('audit-date').value;
+  const callDuration=document.getElementById('call-duration').value;
 
   let rows=[],tot=0,max=0;
   getSections().forEach(sec=>sec.params.forEach(p=>{
-    const k=sec.id+'|'+p.n;
-    const r=ratings[k]||'', c=comments[k]||'';
+    const k=sec.id+'|'+p.n,r=ratings[k]||'',c=comments[k]||'';
     const sc=r?p.w*(RATING_VALS[r]||0)/100:0;
     if(p.w>0){tot+=sc;max+=p.w;}
-    rows.push({callDate,auditDate,callDuration,callType,leadId,qa,qaEmail,agent,agentEmail,
-               section:sec.name,parameter:p.n,weightage:p.w,rating:r,score:sc.toFixed(2),comment:c});
+    rows.push({callDate,auditDate,callDuration,callType,leadId,qa,qaEmail,agent,agentEmail,section:sec.name,parameter:p.n,weightage:p.w,rating:r,score:sc.toFixed(2),comment:c});
   }));
-  const pct = max?(tot/max*100).toFixed(1):0;
-  pendingPayload = {rows,totalScore:tot.toFixed(2),maxScore:max,percentage:pct,callType};
+  const pct=max?(tot/max*100).toFixed(1):0;
+  const payload={rows,totalScore:tot.toFixed(2),maxScore:max,percentage:pct,callType};
 
-  // Count rated params
-  let rated=0,total=0;
-  getSections().forEach(sec=>sec.params.forEach(p=>{total++;const k=sec.id+'|'+p.n;if(ratings[k])rated++;}));
+  const SCRIPT_URL="https://script.google.com/macros/s/AKfycbzU1ETnRuqS6ZdUyp4dXmS5_Y0WO3CPxx0jYspZto-NfLwwPkWxZ2o-_n1I0xACm80N7w/exec";
 
-  // Grade
-  const grade = getGrade(parseFloat(pct));
+  btn.disabled=true;
+  msg.className='status-msg';
+  msg.textContent='Submitting…';
 
-  // Populate modal
-  document.getElementById('modal-score').innerHTML =
-    `${tot.toFixed(1)} / ${max} <span class="grade-badge ${grade.cls}">${grade.label}</span>`;
-  document.getElementById('modal-pct').textContent = pct + '% score';
-  document.getElementById('modal-qa').textContent    = qa;
-  document.getElementById('modal-agent').textContent = agent;
-  document.getElementById('modal-lead').textContent  = leadId || '—';
-  document.getElementById('modal-date').textContent  = callDate;
-  document.getElementById('modal-type').textContent  = callType === 'fresh' ? 'Fresh Call' : 'Follow-up Call';
-  document.getElementById('modal-rated').textContent = `${rated} / ${total}`;
-
-  document.getElementById('confirm-modal').classList.add('visible');
+  fetch(SCRIPT_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(()=>{
+    btn.disabled=false;
+    msg.className='status-msg ok';
+    msg.textContent='✓ Submitted successfully! Check your Google Sheet.';
+  }).catch(()=>{
+    btn.disabled=false;
+    msg.className='status-msg err';
+    msg.textContent='✗ Network error. Please try again.';
+  });
 }
 
-function closeModal() {
-  document.getElementById('confirm-modal').classList.remove('visible');
-  pendingPayload = null;
-}
-
-document.getElementById('confirm-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-document.getElementById('modal-confirm-btn').addEventListener('click', function() {
-  closeModal();
-  doSubmit();
-});
-
-// ═══════════════════════════════════════════
-// ACTUAL SUBMIT — uses JSONP (bypasses CORS 100%, works from any domain)
-// ═══════════════════════════════════════════
-function doSubmit() {
-  if (!pendingPayload) return;
-  const msg = document.getElementById('status-msg');
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU1ETnRuqS6ZdUyp4dXmS5_Y0WO3CPxx0jYspZto-NfLwwPkWxZ2o-_n1I0xACm80N7w/exec";
-  const submitBtn = document.querySelector('.btn-submit');
-
-  msg.className = 'status-msg';
-  msg.textContent = '⏳ Submitting… please wait';
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; }
-
-  // JSONP: inject a <script> tag — Google Apps Script returns callback(data)
-  // This is the ONLY method that works cross-origin AND gets a real response
-  const cbName = 'qaCallback_' + Date.now();
-
-  // Set timeout in case script never loads
-  const timeout = setTimeout(() => {
-    cleanup();
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-    msg.className = 'status-msg err';
-    msg.textContent = '❌ Request timed out. Check your Apps Script deployment and try again.';
-    pendingPayload = null;
-  }, 15000);
-
-  // Define the callback function
-  window[cbName] = function(result) {
-    clearTimeout(timeout);
-    cleanup();
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-    if (result && result.status === 'success') {
-      msg.className = 'status-msg ok';
-      msg.textContent = '✅ Submitted! Data saved to Google Sheet (row ' + result.row + ').';
-      afterSuccess();
-    } else {
-      msg.className = 'status-msg err';
-      msg.textContent = '❌ Error: ' + (result && result.message ? result.message : 'Unknown error');
-      pendingPayload = null;
-    }
-  };
-
-  function cleanup() {
-    const old = document.getElementById('jsonp-script');
-    if (old) document.head.removeChild(old);
-    delete window[cbName];
-  }
-
-  // Build the script tag with payload as POST body via hidden form is not possible
-  // Instead chunk the payload: send meta separately, rows in batches
-  const payload = JSON.stringify(pendingPayload);
-  const encoded = encodeURIComponent(payload);
-
-  // Check URL length — if too long, split into smaller request
-  const url = SCRIPT_URL + '?callback=' + cbName + '&payload=' + encoded;
-
-  if (url.length > 7500) {
-    // Payload too large for GET — send as POST with JSONP callback workaround
-    // Use fetch POST + separate JSONP ping to confirm
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload
-    }).then(() => {
-      clearTimeout(timeout);
-      delete window[cbName];
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-      msg.className = 'status-msg ok';
-      msg.textContent = '✅ Submitted! Check your Google Sheet to confirm data is saved.';
-      afterSuccess();
-    }).catch(() => {
-      clearTimeout(timeout);
-      delete window[cbName];
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-      msg.className = 'status-msg err';
-      msg.textContent = '❌ Submission failed. Check your internet connection.';
-      pendingPayload = null;
-    });
-    return;
-  }
-
-  // Normal JSONP path
-  const script = document.createElement('script');
-  script.id = 'jsonp-script';
-  script.src = url;
-  script.onerror = function() {
-    clearTimeout(timeout);
-    cleanup();
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
-    msg.className = 'status-msg err';
-    msg.textContent = '❌ Could not reach Google Apps Script. Check deployment.';
-    pendingPayload = null;
-  };
-  document.head.appendChild(script);
-}
-
-function afterSuccess() {
-  const leadId = document.getElementById('lead-id').value.trim();
-  if (leadId) {
-    submittedLeadIds.push(leadId);
-    try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
-  }
-  clearDraft();
-  pendingPayload = null;
-}
-
-
-// ═══════════════════════════════════════════
-// RESET FORM
-// ═══════════════════════════════════════════
-function showResetModal() {
-  document.getElementById('reset-modal').classList.add('visible');
-}
-function closeResetModal() {
-  document.getElementById('reset-modal').classList.remove('visible');
-}
-function confirmReset() {
-  closeResetModal();
-  ratings = {};
-  comments = {};
-  callType = 'fresh';
-  document.getElementById('btn-fresh').className = 'type-btn active-fresh';
-  document.getElementById('btn-followup').className = 'type-btn';
-  document.getElementById('qa-sel').value = '';
-  document.getElementById('agent-sel').innerHTML = '<option value="">— select QA first —</option>';
-  document.getElementById('qa-email').textContent = '';
-  document.getElementById('agent-email').textContent = '';
-  document.getElementById('lead-id').value = '';
-  document.getElementById('call-date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('audit-date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('call-duration').value = '';
-  document.getElementById('status-msg').textContent = '';
-  document.getElementById('status-msg').className = 'status-msg';
-  document.getElementById('dup-banner').classList.remove('show');
-  clearAllErrors();
-  clearDraft();
-  renderSections();
-}
-
-document.getElementById('reset-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeResetModal();
-});
-
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
-document.getElementById('call-date').value = new Date().toISOString().split('T')[0];
-document.getElementById('audit-date').value = new Date().toISOString().split('T')[0];
-
-// Hook meta field changes for auto-save
-['call-date','audit-date','call-duration','lead-id'].forEach(id => {
-  const el = document.getElementById(id);
-  if(el) el.addEventListener('input', scheduleSave);
-});
-document.getElementById('call-date').addEventListener('change', ()=>{clearFieldError('field-date');scheduleSave();});
-
+document.getElementById('call-date').value=new Date().toISOString().split('T')[0];
+document.getElementById('audit-date').value=new Date().toISOString().split('T')[0];
 renderSections();
-loadDraft(); // restore draft after render
 </script>
 </body>
 </html>
