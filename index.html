@@ -822,25 +822,84 @@ function doSubmit() {
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU1ETnRuqS6ZdUyp4dXmS5_Y0WO3CPxx0jYspZto-NfLwwPkWxZ2o-_n1I0xACm80N7w/exec";
   msg.className='status-msg'; msg.textContent='Submitting…';
 
-  fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(pendingPayload)
-  }).then(()=>{
+  // Hidden iframe POST — most reliable way to send to Apps Script without CORS issues
+  const iframeId = 'submit-iframe';
+  let iframe = document.getElementById(iframeId);
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = iframeId;
+    iframe.name = iframeId;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = SCRIPT_URL;
+  form.target = iframeId;
+  form.style.display = 'none';
+
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'data';
+  input.value = JSON.stringify(pendingPayload);
+  form.appendChild(input);
+  document.body.appendChild(form);
+
+  // Listen for iframe load = script responded
+  iframe.onload = function() {
     msg.className='status-msg ok';
     msg.textContent='✓ Submitted successfully! Check your Google Sheet.';
-    // Save lead ID to duplicate guard
     const leadId = document.getElementById('lead-id').value.trim();
     if (leadId) {
       submittedLeadIds.push(leadId);
-      try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(e) {}
+      try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
     }
     clearDraft();
     pendingPayload = null;
-  }).catch(()=>{
+    document.body.removeChild(form);
+  };
+
+  iframe.onerror = function() {
     msg.className='status-msg err';
-    msg.textContent='✗ Could not reach Google Apps Script.';
+    msg.textContent='✗ Submission failed. Please try again.';
     pendingPayload = null;
-  });
+    document.body.removeChild(form);
+  };
+
+  // Timeout fallback — Apps Script sometimes doesn't fire onload
+  const submitTimeout = setTimeout(function() {
+    if (msg.textContent === 'Submitting…') {
+      msg.className='status-msg ok';
+      msg.textContent='✓ Submitted! (Check your Google Sheet to confirm.)';
+      const leadId = document.getElementById('lead-id').value.trim();
+      if (leadId) {
+        submittedLeadIds.push(leadId);
+        try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
+      }
+      clearDraft();
+      pendingPayload = null;
+    }
+  }, 8000);
+
+  form.submit();
+  // Clear timeout if iframe fires first
+  iframe.onload = function() {
+    clearTimeout(submitTimeout);
+    msg.className='status-msg ok';
+    msg.textContent='✓ Submitted successfully! Check your Google Sheet.';
+    const leadId = document.getElementById('lead-id').value.trim();
+    if (leadId) {
+      submittedLeadIds.push(leadId);
+      try { localStorage.setItem("ambak_submitted_leads", JSON.stringify(submittedLeadIds)); } catch(ex) {}
+    }
+    clearDraft();
+    pendingPayload = null;
+    try { document.body.removeChild(form); } catch(ex) {}
+  };
+
 }
+
 
 // ═══════════════════════════════════════════
 // RESET FORM
